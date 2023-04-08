@@ -6,8 +6,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./main.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0" />
 </head>
 <body>
-    
+    <div class="content">
+        <div class="header">
+            <img src="../src/images/logo.svg" alt="">
+            <h1>To-Do List</h1>
+        </div>
+        <div class="todo-list">
+            <div class="left-pane">
+                <ul class="basic-items">
+                    <li>Home</li>
+                    <li>Today</li>
+                    <li>This week</li>
+                </ul>
+                <div class="projects">
+                    <div class="project-header-area">
+                        <span>Projects</span>
+                        <button class="add-project-btn">+</button>
+                    </div class="project-header-area">
+                    <ul>
+                        <li class="active">dsada</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="task-area">
+                <div class="task-list">
+                    <div class="task low-priority done">
+                        <input type="checkbox" class="task-checkbox">
+                        <span class="task-name">Task Name</span>
+                        <button class="task-details">Details</button>
+                        <button class="task-edit">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                        <button class="task-delete">X</button>
+                      </div>
+                    <div class="task high-priority">
+                        <input type="checkbox" class="task-checkbox">
+                        <span class="task-name">Task Name</span>
+                        <button class="task-details">Details</button>
+                        <button class="task-edit">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                        <button class="task-delete">X</button>
+                    </div>
+                    <div class="task medium-priority">
+                        <input type="checkbox" class="task-checkbox">
+                        <span class="task-name">Task Name</span>
+                        <button class="task-details">Details</button>
+                        <button class="task-edit">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                        <button class="task-delete">X</button>
+                    </div>
+                </div>
+                <button class="add-task-btn">+ Add task</button>
+            </div>
+        </div>
+        <div class="footer">
+            <span class="credits">tarikkocar © 2023</span>
+            <a href="https://github.com/tarikkocar" target="_blank"><img src="../src/images/github-gray.svg"></a>
+        </div>
+    </div>
 </body>
 </html>
