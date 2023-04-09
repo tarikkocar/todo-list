@@ -1,4 +1,4 @@
-import Project from "./modules/projects.js";
+import Project from "./projects.js";
 
 export default class ToDoList {
   constructor() {
@@ -9,7 +9,7 @@ export default class ToDoList {
   }
 
   addProject(project) {
-    this.projects.push(project);
+    this.projects.push(new Project(project));
   }
 
   deleteProject(project) {
