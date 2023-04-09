@@ -26,7 +26,7 @@ body {
 }
 h1 {
     color: #d1e8e8;
-    font-family: var(--main-font);
+    font-family: 'Lato', sans-serif;
 }
 .todo-list {
     display: flex;
@@ -47,7 +47,7 @@ ul {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 12px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -71,6 +71,9 @@ li {
     border-radius: 8px;
     padding: 5px 15px;
     transition: background-color 0.3s ease-out;
+    height: 28px;
+    display: flex;
+    align-items: center;
 }
 li:hover {
     background-color: rgba(179, 221, 238, 40%);
@@ -114,6 +117,8 @@ li.active {
     transition: background-color 0.2s ease-out;
     font-family: inherit;
     margin-top: auto;
+    margin-left: auto;
+    margin-right: 5%;
 }
 .add-task-btn:hover {
     background-color: #4ca9cd;
@@ -124,12 +129,15 @@ li.active {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
     padding: 5px 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 250px);
 }
 .task {
     width: 100%;
-    height: 50px;
+    height: 30px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -185,4 +193,15 @@ li.active {
 span ~ a {
     display: flex;
     align-items: center;
+}
+.projects input {
+    font-family: inherit;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    color: inherit;
+    width: 130px;
+}
+.projects input:focus {
+    outline: none;
 }
