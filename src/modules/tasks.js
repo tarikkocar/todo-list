@@ -3,8 +3,8 @@ export default class Task {
     title,
     description,
     dueDate,
-    priority = "Medium",
-    status = "Incomplete"
+    priority = "medium",
+    status = "incomplete"
   ) {
     this.title = title;
     this.description = description;
@@ -14,6 +14,6 @@ export default class Task {
   }
 
   markComplete() {
-    this.status = "Complete";
+    this.status = "completed";
   }
 }
