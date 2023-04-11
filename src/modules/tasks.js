@@ -16,4 +16,8 @@ export default class Task {
   markComplete() {
     this.status = "completed";
   }
+
+  markIncomplete() {
+    this.status = "incomplete";
+  }
 }

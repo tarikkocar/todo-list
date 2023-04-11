@@ -37,9 +37,16 @@ export default class UI {
   }
 
   createProject() {
+    const existingInput = this.projectList.querySelector(".new-project-input");
+    if (existingInput) {
+      existingInput.focus();
+      return;
+    }
+
     const projectNameInput = document.createElement("input");
     projectNameInput.setAttribute("type", "text");
     projectNameInput.setAttribute("placeholder", "Project name");
+    projectNameInput.classList.add("new-project-input");
 
     const projectItem = document.createElement("li");
     projectItem.appendChild(projectNameInput);
@@ -102,10 +109,18 @@ export default class UI {
       taskItem.appendChild(deleteBtn);
 
       this.taskList.appendChild(taskItem);
+
+      this.addTaskEventListeners(taskItem, currentTasks[i]);
     }
   }
 
   createTask() {
+    const existingInput = this.taskList.querySelector(".task-input");
+    if (existingInput) {
+      existingInput.focus();
+      return;
+    }
+
     const taskNameInput = document.createElement("input");
     taskNameInput.setAttribute("type", "text");
     taskNameInput.setAttribute("placeholder", "Task title");
@@ -139,6 +154,30 @@ export default class UI {
       } else {
         item.classList.remove("active");
       }
+    });
+  }
+
+  addTaskEventListeners(taskElement, task) {
+    const checkBox = taskElement.querySelector("input");
+    const taskButtons = taskElement.querySelectorAll("button");
+
+    // Mark as done
+    checkBox.addEventListener("change", () => {
+      if (checkBox.checked) {
+        taskElement.classList.add("completed");
+        task.markComplete();
+      } else {
+        taskElement.classList.remove("completed");
+        task.markIncomplete();
+      }
+    });
+
+    // Edit task
+
+    // Delete task
+    taskButtons[1].addEventListener("click", () => {
+      this.toDoList.getProjects()[this.currentProjectIndex].deleteTask(task);
+      taskElement.remove();
     });
   }
 
