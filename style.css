@@ -142,6 +142,7 @@ li.active {
     background-color: transparent;
     color: inherit;
     width: 200px;
+    font-size: 15px;
 }
 .task-input:focus {
     outline: none;
