@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To-Do App</title>
     <script src="./main.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -42,6 +42,38 @@
                 <button class="add-task-btn">+ Add task</button>
             </div>
         </div>
+        <div class="modal hidden">
+            <form action="#">
+                <div class="form-top">
+                    <div class="input-text">
+                        <input type="text" id="title" name="title" required maxlength="128">
+                    </div>
+                    <button type="button" class="btn-close">X</button>
+                </div>
+                <textarea cols="30" rows="8"></textarea>
+                <div class="input-date">
+                    <label for="date">Due date:</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="input-radio">
+                    <span>Priority:</span>
+                    <div class="low-priority-btn">
+                        <input type="radio" id="low" name="priority">
+                        <label for="low">Low</label>
+                    </div>
+                    <div class="medium-priority-btn">
+                        <input type="radio" id="medium" name="priority" checked>
+                        <label for="medium">Medium</label>
+                    </div>
+                    <div class="high-priority-btn">
+                        <input type="radio" id="high" name="priority">
+                        <label for="high">High</label>
+                    </div>
+                </div>
+                <button type="button" class="btn-save">Save</button>
+            </form>
+        </div>
+        <div class="overlay hidden"></div>
         <div class="footer">
             <span class="credits">tarikkocar © 2023</span>
             <a href="https://github.com/tarikkocar" target="_blank"><img src="../src/images/github-gray.svg"></a>
