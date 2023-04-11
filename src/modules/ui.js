@@ -9,6 +9,10 @@ export default class UI {
     this.addProjectBtn = document.querySelector(".add-project-btn");
     this.taskList = document.querySelector(".task-list");
     this.addTaskBtn = document.querySelector(".add-task-btn");
+    this.modal = document.querySelector(".modal");
+    this.overlay = document.querySelector(".overlay");
+    this.form = document.querySelector("form");
+    this.formCloseBtn = document.querySelector(".btn-close");
   }
 
   loadHomePage() {
@@ -157,6 +161,16 @@ export default class UI {
     });
   }
 
+  openForm() {
+    this.modal.classList.remove("hidden");
+    this.overlay.classList.remove("hidden");
+  }
+
+  closeForm() {
+    this.modal.classList.add("hidden");
+    this.overlay.classList.add("hidden");
+  }
+
   addTaskEventListeners(taskElement, task) {
     const checkBox = taskElement.querySelector("input");
     const taskButtons = taskElement.querySelectorAll("button");
@@ -173,6 +187,14 @@ export default class UI {
     });
 
     // Edit task
+    taskButtons[0].addEventListener("click", this.openForm.bind(this));
+    this.formCloseBtn.addEventListener("click", this.closeForm.bind(this));
+    this.overlay.addEventListener("click", this.closeForm.bind(this));
+    this.form.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+      }
+    });
 
     // Delete task
     taskButtons[1].addEventListener("click", () => {
