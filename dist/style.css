@@ -2,6 +2,9 @@
     --main-bg-color: #35548d;
     --main-font: 'Montserrat', sans-serif;
 }
+* {
+    font-family: var(--main-font);
+}
 body {
     margin: 0;
     padding: 0;
@@ -39,7 +42,6 @@ h1 {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    font-family: var(--main-font);
     gap: 10px;
 }
 ul {
@@ -103,7 +105,6 @@ li.active {
     width: 80%;
     background-color: #fff;
     padding: 10px;
-    font-family: var(--main-font);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -117,7 +118,6 @@ li.active {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s ease-out;
-    font-family: inherit;
     margin-top: auto;
     margin-left: auto;
     margin-right: 5%;
@@ -138,14 +138,21 @@ li.active {
     max-height: calc(100vh - 250px);
 }
 .task-input {
-    font-family: inherit;
     border: none;
     background-color: transparent;
     color: inherit;
     width: 200px;
     font-size: 15px;
 }
-.task-input:focus {
+.task-edit-input {
+    border: none;
+    border-bottom: 1px #1B8CC2 solid;
+    background-color: transparent;
+    color: inherit;
+    width: 150px;
+    font-size: 15px;
+}
+.task-input:focus, .task-edit-input:focus {
     outline: none;
 }
 .task {
@@ -168,20 +175,38 @@ li.active {
     border-left: #66c1c1 8px solid;
 }
 .medium-priority {
-    border-left: #e9624a 8px solid;
+    border-left: #ff8570 8px solid;
 }
 .high-priority {
     border-left: #d8312b 8px solid;
 }
-.task-name {
+.task-name, .task-edit-input {
     margin-right: auto;
+}
+.task-edit {
+    height: 15px;
+    width: auto;
 }
 .task button {
     border: none;
     cursor: pointer;
-    font-family: var(--main-font);
     font-size: 15px;
     background-color: transparent;
+}
+.due-date {
+    margin-left: 80px;
+}
+.priority-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: 20px;
+}
+.priority-area > div {
+    width: 50px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
 }
 .completed > span {
     text-decoration: line-through;
@@ -192,7 +217,6 @@ li.active {
     padding: 10px;
     text-align: center;
     height: 40px;
-    font-family: var(--main-font);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -208,7 +232,6 @@ span ~ a {
     align-items: center;
 }
 .projects input {
-    font-family: inherit;
     border: none;
     background-color: transparent;
     font-size: 18px;
@@ -217,84 +240,6 @@ span ~ a {
 }
 .projects input:focus {
     outline: none;
-}
-.modal {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    width: 500px;
-    padding: 1rem;
-    min-height: 300px;
-    position: absolute;
-    top: 8em;
-    border-radius: 5px;
-    z-index: 2;
-    font-family: var(--main-font);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border: 1.5px rgb(79, 146, 235) solid;
-}
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    font-size: 14px;
-}
-.form-top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: auto;
-}
-.btn-close {
-    align-self: flex-end;
-    padding: 0.3rem 0.6rem;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-family: var(--main-font);
-}
-input#title {
-    border: none;
-    border-bottom: 1px solid black;
-    background-color: inherit;
-    font-size: 25px;
-    width: 300px;
-}
-input#title:focus {
-    outline: none;
-}
-textarea {
-    resize: none;
-}
-textarea:focus {
-    outline: none;
-}
-.input-date {
-    display: flex;
-    gap: 20px;
-}
-.input-radio {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.input-radio label {
-    font-size: 13px;
-}
-.btn-save {
-    font-family: var(--main-font);
-    width: 50px;
-    align-self: center;
-}
-.overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(4px);
-    z-index: 1;
 }
 .hidden, .hidden > * {
     display: none;

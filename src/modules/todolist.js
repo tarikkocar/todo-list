@@ -3,9 +3,9 @@ import Project from "./projects.js";
 export default class ToDoList {
   constructor() {
     this.projects = [];
-    this.projects.push(new Project("Home", 0));
-    this.projects.push(new Project("Today", 1));
-    this.projects.push(new Project("This week", 2));
+    this.projects.push(new Project("Home"));
+    this.projects.push(new Project("Today"));
+    this.projects.push(new Project("This week"));
   }
 
   addProject(project) {

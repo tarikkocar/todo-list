@@ -9,10 +9,6 @@ export default class UI {
     this.addProjectBtn = document.querySelector(".add-project-btn");
     this.taskList = document.querySelector(".task-list");
     this.addTaskBtn = document.querySelector(".add-task-btn");
-    this.modal = document.querySelector(".modal");
-    this.overlay = document.querySelector(".overlay");
-    this.form = document.querySelector("form");
-    this.formCloseBtn = document.querySelector(".btn-close");
   }
 
   loadHomePage() {
@@ -88,19 +84,16 @@ export default class UI {
       const checkBox = document.createElement("input");
       checkBox.setAttribute("type", "checkbox");
       checkBox.classList.add("task-checkbox");
+      checkBox.checked = currentTasks[i].status === "completed" ? true : false;
 
       const taskName = document.createElement("span");
       taskName.classList.add("task-name");
       const taskNameText = document.createTextNode(`${currentTasks[i].title}`);
       taskName.appendChild(taskNameText);
 
-      const editBtn = document.createElement("button");
+      const editBtn = document.createElement("img");
+      editBtn.setAttribute("src", "../src/images/edit.svg");
       editBtn.classList.add("task-edit");
-      const editSymbol = document.createElement("span");
-      editSymbol.classList.add("material-symbols-outlined");
-      const editText = document.createTextNode("edit");
-      editSymbol.appendChild(editText);
-      editBtn.appendChild(editSymbol);
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("task-delete");
@@ -111,6 +104,13 @@ export default class UI {
       taskItem.appendChild(taskName);
       taskItem.appendChild(editBtn);
       taskItem.appendChild(deleteBtn);
+
+      if (currentTasks[i].dueDate) {
+        const dueDate = document.createElement("span");
+        dueDate.classList.add("due-date");
+        dueDate.innerHTML = currentTasks[i].dueDate;
+        taskName.insertAdjacentElement("afterend", dueDate);
+      }
 
       this.taskList.appendChild(taskItem);
 
@@ -161,19 +161,60 @@ export default class UI {
     });
   }
 
-  openForm() {
-    this.modal.classList.remove("hidden");
-    this.overlay.classList.remove("hidden");
-  }
+  showForm(taskElement, task) {
+    const taskName = taskElement.querySelector(".task-name");
+    const dueDate = taskElement.querySelector(".due-date");
+    const taskForm = document.createElement("form");
+    const taskNameInput = document.createElement("input");
+    const dueDateInput = document.createElement("input");
+    const saveFormBtn = document.createElement("button");
+    const priorityArea = document.createElement("div");
 
-  closeForm() {
-    this.modal.classList.add("hidden");
-    this.overlay.classList.add("hidden");
+    taskForm.setAttribute("action", "#");
+    taskNameInput.setAttribute("type", "text");
+    taskNameInput.classList.add("task-edit-input");
+    dueDateInput.setAttribute("type", "date");
+    dueDateInput.classList.add("task-date");
+    saveFormBtn.setAttribute("type", "button");
+    saveFormBtn.innerHTML = "Save";
+    priorityArea.classList.add("priority-area");
+    priorityArea.innerHTML =
+      "<div class= 'low-priority-btn'><input type='radio' id='low' name='priority'><label for='low'>Low</label></div><div class='medium-priority-btn'><input type='radio' id='medium' name='priority'><label for='medium'>Medium</label></div><div class='high-priority-btn'><input type='radio' id='high' name='priority'><label for='high'>High</label></div>";
+
+    taskNameInput.value = task.title;
+    dueDateInput.value = task.dueDate;
+
+    if (taskName) {
+      taskElement.replaceChild(taskNameInput, taskName);
+    }
+    if (dueDate) {
+      taskElement.replaceChild(dueDateInput, dueDate);
+    } else {
+      taskNameInput.insertAdjacentElement("afterend", dueDateInput);
+    }
+    dueDateInput.insertAdjacentElement("afterend", saveFormBtn);
+    dueDateInput.insertAdjacentElement("beforebegin", priorityArea);
+    taskElement.querySelector(`input[id="${task.priority}"]`).checked = true;
+
+    saveFormBtn.addEventListener("click", () => {
+      task.title = taskNameInput.value;
+      task.dueDate = dueDateInput.value;
+      const radioButtons = taskElement.querySelectorAll("input[type='radio']");
+      let selectedId = null;
+      radioButtons.forEach((radioButton) => {
+        if (radioButton.checked) {
+          selectedId = radioButton.id;
+        }
+      });
+      task.priority = selectedId;
+      this.displayTasks(this.currentProjectIndex);
+    });
   }
 
   addTaskEventListeners(taskElement, task) {
     const checkBox = taskElement.querySelector("input");
-    const taskButtons = taskElement.querySelectorAll("button");
+    const editBtn = taskElement.querySelector("img");
+    const deleteBtn = taskElement.querySelector(".task-delete");
 
     // Mark as done
     checkBox.addEventListener("change", () => {
@@ -187,17 +228,12 @@ export default class UI {
     });
 
     // Edit task
-    taskButtons[0].addEventListener("click", this.openForm.bind(this));
-    this.formCloseBtn.addEventListener("click", this.closeForm.bind(this));
-    this.overlay.addEventListener("click", this.closeForm.bind(this));
-    this.form.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-      }
+    editBtn.addEventListener("click", () => {
+      this.showForm(taskElement, task);
     });
 
     // Delete task
-    taskButtons[1].addEventListener("click", () => {
+    deleteBtn.addEventListener("click", () => {
       this.toDoList.getProjects()[this.currentProjectIndex].deleteTask(task);
       taskElement.remove();
     });
