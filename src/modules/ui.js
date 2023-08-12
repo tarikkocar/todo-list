@@ -116,6 +116,17 @@ export default class UI {
 
       this.addTaskEventListeners(taskItem, currentTasks[i]);
     }
+
+    if ((this.currentProjectIndex === 1) | (this.currentProjectIndex === 2)) {
+      this.addTaskBtn.classList.add("hidden");
+    } else {
+      this.addTaskBtn.classList.remove("hidden");
+    }
+  }
+
+  displayDatedTasks(projectIndex) {
+    this.currentProjectIndex = projectIndex;
+    const allTasks = this.toDoList.getProjects()[0].getTasks();
   }
 
   createTask() {
