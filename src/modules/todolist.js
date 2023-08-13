@@ -22,4 +22,16 @@ export default class ToDoList {
   getProjects() {
     return this.projects;
   }
+
+  getAllTasks() {
+    let allTasks = [];
+
+    for (let i = 0; i < this.projects.length; i++) {
+      if (i !== 1 && i !== 2) {
+        allTasks = allTasks.concat(this.projects[i].getTasks());
+      }
+    }
+
+    return allTasks;
+  }
 }

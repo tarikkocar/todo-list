@@ -1,4 +1,5 @@
 import ToDoList from "./todolist.js";
+import { isToday, isThisWeek } from "date-fns";
 
 export default class UI {
   constructor() {
@@ -72,7 +73,18 @@ export default class UI {
   displayTasks(projectIndex) {
     this.currentProjectIndex = projectIndex;
     const currentProject = this.toDoList.getProjects()[projectIndex];
-    const currentTasks = currentProject.getTasks();
+    const currentTasks =
+      projectIndex === 0
+        ? this.toDoList.getAllTasks()
+        : projectIndex === 1
+        ? this.toDoList
+            .getAllTasks()
+            .filter((task) => isToday(new Date(task.dueDate)))
+        : projectIndex === 2
+        ? this.toDoList
+            .getAllTasks()
+            .filter((task) => isThisWeek(new Date(task.dueDate)))
+        : currentProject.getTasks();
     this.taskList.innerHTML = "";
 
     for (let i = 0; i < currentTasks.length; i++) {
@@ -122,11 +134,6 @@ export default class UI {
     } else {
       this.addTaskBtn.classList.remove("hidden");
     }
-  }
-
-  displayDatedTasks(projectIndex) {
-    this.currentProjectIndex = projectIndex;
-    const allTasks = this.toDoList.getProjects()[0].getTasks();
   }
 
   createTask() {
