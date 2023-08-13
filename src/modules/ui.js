@@ -3,6 +3,7 @@ import Project from "./projects.js";
 import Task from "./tasks.js";
 import { isToday, isThisWeek, format } from "date-fns";
 import Edit from "../images/edit.svg";
+import html from "../../dist/index.html";
 
 export default class UI {
   constructor() {
