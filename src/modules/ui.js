@@ -1,9 +1,11 @@
 import ToDoList from "./todolist.js";
-import { isToday, isThisWeek } from "date-fns";
+import Project from "./projects.js";
+import Task from "./tasks.js";
+import { isToday, isThisWeek, format } from "date-fns";
 
 export default class UI {
   constructor() {
-    this.toDoList = new ToDoList();
+    this.toDoList = this.loadToDoList() || new ToDoList();
     this.currentProjectIndex = 0;
     this.basicItems = document.querySelector(".basic-items");
     this.projectList = document.querySelector(".project-list");
@@ -13,6 +15,7 @@ export default class UI {
   }
 
   loadHomePage() {
+    this.displayProjects();
     this.displayTasks(this.currentProjectIndex);
     this.handleLeftPaneAnimation(this.currentProjectIndex);
     this.addPageEventListeners();
@@ -69,6 +72,7 @@ export default class UI {
         this.displayTasks(newProjectIndex);
         this.handleLeftPaneAnimation(newProjectIndex);
         projectItem.remove();
+        this.saveToDoList(this.toDoList);
       } else if (e.key === "Escape") {
         projectItem.remove();
       }
@@ -125,7 +129,9 @@ export default class UI {
       if (currentTasks[i].dueDate) {
         const dueDate = document.createElement("span");
         dueDate.classList.add("due-date");
-        dueDate.innerHTML = currentTasks[i].dueDate;
+        const date = new Date(currentTasks[i].dueDate);
+        const displayedDate = format(date, "d MMM");
+        dueDate.innerHTML = displayedDate;
         taskName.insertAdjacentElement("afterend", dueDate);
       }
 
@@ -165,6 +171,7 @@ export default class UI {
         this.toDoList.getProjects()[this.currentProjectIndex].addTask(taskName);
         this.displayTasks(this.currentProjectIndex);
         taskItem.remove();
+        this.saveToDoList(this.toDoList);
       } else if (e.key === "Escape") {
         taskItem.remove();
       }
@@ -239,7 +246,36 @@ export default class UI {
       });
       task.priority = selectedId;
       this.displayTasks(this.currentProjectIndex);
+      this.saveToDoList(this.toDoList);
     });
+  }
+
+  saveToDoList(toDoList) {
+    localStorage.setItem("toDoList", JSON.stringify(toDoList));
+    console.log(localStorage.getItem("toDoList"));
+  }
+
+  loadToDoList() {
+    if (localStorage.getItem("toDoList")) {
+      const projectData = JSON.parse(localStorage.getItem("toDoList"));
+      const loadedToDoList = new ToDoList();
+      loadedToDoList.projects = projectData.projects.map((projectData) => {
+        const project = new Project(projectData.title);
+        project.tasks = projectData.tasks.map(
+          (taskData) =>
+            new Task(
+              taskData.title,
+              taskData.dueDate,
+              taskData.priority,
+              taskData.status
+            )
+        );
+        return project;
+      });
+      return loadedToDoList;
+    } else {
+      return new ToDoList();
+    }
   }
 
   addTaskEventListeners(taskElement, task) {
@@ -256,6 +292,7 @@ export default class UI {
         taskElement.classList.remove("completed");
         task.markIncomplete();
       }
+      this.saveToDoList(this.toDoList);
     });
 
     // Edit task
@@ -267,6 +304,7 @@ export default class UI {
     deleteBtn.addEventListener("click", () => {
       this.toDoList.getProjects()[this.currentProjectIndex].deleteTask(task);
       taskElement.remove();
+      this.saveToDoList(this.toDoList);
     });
   }
 
@@ -303,6 +341,7 @@ export default class UI {
           this.handleLeftPaneAnimation(projectIndex - 1);
           this.displayTasks(projectIndex - 1);
         }
+        this.saveToDoList(this.toDoList);
       }
     });
 
