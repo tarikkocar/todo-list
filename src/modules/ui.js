@@ -2,6 +2,7 @@ import ToDoList from "./todolist.js";
 import Project from "./projects.js";
 import Task from "./tasks.js";
 import { isToday, isThisWeek, format } from "date-fns";
+import Edit from "../images/edit.svg";
 
 export default class UI {
   constructor() {
@@ -113,7 +114,7 @@ export default class UI {
       taskName.appendChild(taskNameText);
 
       const editBtn = document.createElement("img");
-      editBtn.setAttribute("src", "../src/images/edit.svg");
+      editBtn.setAttribute("src", Edit);
       editBtn.classList.add("task-edit");
 
       const deleteBtn = document.createElement("button");
@@ -252,7 +253,6 @@ export default class UI {
 
   saveToDoList(toDoList) {
     localStorage.setItem("toDoList", JSON.stringify(toDoList));
-    console.log(localStorage.getItem("toDoList"));
   }
 
   loadToDoList() {
