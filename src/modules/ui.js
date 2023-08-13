@@ -30,8 +30,13 @@ export default class UI {
       ) {
         const projectName = document.createTextNode(projects[i].title);
         const projectItem = document.createElement("li");
+        const deleteProjectBtn = document.createElement("button");
+        deleteProjectBtn.setAttribute("type", "button");
+        deleteProjectBtn.innerHTML = "X";
+        deleteProjectBtn.classList.add("project-delete");
         projectItem.dataset.index = i;
         projectItem.appendChild(projectName);
+        projectItem.appendChild(deleteProjectBtn);
         this.projectList.appendChild(projectItem);
       }
     }
@@ -173,8 +178,16 @@ export default class UI {
     leftPaneItems.forEach((item, index) => {
       if (index === projectIndex) {
         item.classList.add("active");
+        const deleteBtn = item.querySelector("button");
+        if (deleteBtn) {
+          deleteBtn.classList.remove("hidden");
+        }
       } else {
         item.classList.remove("active");
+        const deleteBtn = item.querySelector("button");
+        if (deleteBtn) {
+          deleteBtn.classList.add("hidden");
+        }
       }
     });
   }
@@ -279,6 +292,17 @@ export default class UI {
         const projectIndex = Number(e.target.dataset.index);
         this.displayTasks(projectIndex);
         this.handleLeftPaneAnimation(projectIndex);
+      } else if (e.target.tagName === "BUTTON") {
+        const projectIndex = Number(e.target.parentNode.dataset.index);
+        this.toDoList.deleteProject(projectIndex);
+        this.displayProjects();
+        if (this.toDoList.getProjects()[projectIndex]) {
+          this.handleLeftPaneAnimation(projectIndex);
+          this.displayTasks(projectIndex);
+        } else {
+          this.handleLeftPaneAnimation(projectIndex - 1);
+          this.displayTasks(projectIndex - 1);
+        }
       }
     });
 

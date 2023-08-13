@@ -77,12 +77,19 @@ li {
     height: 28px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 li:hover {
     background-color: rgba(179, 221, 238, 40%);
 }
 li.active {
     background-color: rgba(179, 221, 238, 40%);
+}
+.project-delete {
+    font-size: 12px;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 .project-header-area {
     display: flex;
@@ -190,7 +197,7 @@ li.active {
 .task button {
     border: none;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 12px;
     background-color: transparent;
 }
 .due-date {

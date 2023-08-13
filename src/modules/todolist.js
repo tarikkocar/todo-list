@@ -12,10 +12,9 @@ export default class ToDoList {
     this.projects.push(new Project(project));
   }
 
-  deleteProject(project) {
-    const index = this.projects.indexOf(project);
-    if (index > -1) {
-      this.projects.splice(index, 1);
+  deleteProject(projectIndex) {
+    if (projectIndex > -1) {
+      this.projects.splice(projectIndex, 1);
     }
   }
 
