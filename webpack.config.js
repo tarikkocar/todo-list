@@ -13,8 +13,8 @@ module.exports = {
         type: "asset/resource",
       },
       {
-        test: /\.html$/i,
-        loader: "html-loader",
+        test: /\.svg$/,
+        loader: "svg-inline-loader",
       },
     ],
   },
