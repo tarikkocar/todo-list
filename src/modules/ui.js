@@ -2,7 +2,9 @@ import ToDoList from "./todolist.js";
 import Project from "./projects.js";
 import Task from "./tasks.js";
 import { isToday, isThisWeek, format } from "date-fns";
+import Logo from "../images/logo.svg";
 import Edit from "../images/edit.svg";
+import GitHub from "../images/github-gray.svg";
 
 export default class UI {
   constructor() {
@@ -20,6 +22,15 @@ export default class UI {
     this.displayTasks(this.currentProjectIndex);
     this.handleLeftPaneAnimation(this.currentProjectIndex);
     this.addPageEventListeners();
+    const logo = document.createElement("img");
+    logo.setAttribute("src", Logo);
+    document
+      .querySelector(".header")
+      .insertBefore(logo, document.querySelector(".header").firstChild);
+
+    const github = document.createElement("img");
+    github.setAttribute("src", GitHub);
+    document.querySelector(".footer a").appendChild(github);
   }
 
   displayProjects() {
